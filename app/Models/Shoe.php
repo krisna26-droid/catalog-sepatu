@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Shoe extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'brand',
+        'price',
+        'description',
+        'image',
+        'stock',
+    ];
+
+    protected $casts = [
+        'price' => 'integer',
+        'stock' => 'integer',
+    ];
+}
