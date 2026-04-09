@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin — Catalog Sepatu</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>Admin — Shoe Management</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50 font-sans">
@@ -32,7 +30,7 @@
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M3 3h10v2H3zm0 4h10v2H3zm0 4h10v2H3z"/>
                 </svg>
-                Data Sepatu
+                Shoe Management
             </a>
         </nav>
         <div class="p-4 border-t border-gray-100">

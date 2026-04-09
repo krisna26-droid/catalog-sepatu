@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Daftar Sepatu')
+@section('page-title', 'Shoe Management')
 
 @section('content')
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -45,47 +45,51 @@
                     </span>
                 </div>
 
-                <div class="mt-4">
-                    {{-- Judul & Harga: Font & Margin disamakan --}}
-                    <h3 class="text-lg font-extrabold text-gray-900 truncate">{{ $shoe->name }}</h3>
-                    <p class="text-blue-600 text-xl font-black mt-2">
-                        IDR {{ number_format($shoe->price, 0, ',', '.') }}
-                    </p>
-                    
-                    {{-- FOOTER: Label Stok & Tombol Aksi --}}
-                    <div class="flex items-center justify-between mt-4 gap-2">
-                        <div>
-                            @if($shoe->stock <= 0)
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 border border-red-200 uppercase">
-                                    Out of Stock
-                                </span>
-                            @elseif($shoe->stock <= 5)
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 border border-amber-200 uppercase">
-                                    Low Stock: {{ $shoe->stock }}
-                                </span>
-                            @else
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 border border-green-200 uppercase">
-                                    In Stock: {{ $shoe->stock }}
-                                </span>
-                            @endif
-                        </div>
-                        
-                        {{-- Tombol: Ukuran font [10px] & padding disesuaikan agar muat berdua --}}
-                        <div class="flex gap-1">
-                            <a href="{{ route('admin.shoes.edit', $shoe) }}" 
-                               class="inline-flex items-center px-3 py-2 bg-gray-900 hover:bg-black rounded-lg font-bold text-[10px] text-white uppercase tracking-wider transition-all">
-                                Edit
-                            </a>
+<div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-bold text-gray-800">Shoe Management</h2>
 
-                            <form action="{{ route('admin.shoes.destroy', $shoe) }}" method="POST" onsubmit="return confirm('Hapus produk ini?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" 
-                                        class="inline-flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-[10px] text-white uppercase tracking-wider transition-all">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
+    <a href="{{ route('admin.shoes.create') }}"
+       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
+        + Add New Shoe
+    </a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    @forelse($shoes as $shoe)
+        <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition p-5 border">
+
+            {{-- IMAGE + ACTION --}}
+            <div class="relative">
+
+                @if($shoe->image)
+                    <img src="{{ asset('storage/' . $shoe->image) }}"
+                         class="rounded-lg h-48 w-full object-cover">
+                @else
+                    <div class="h-48 bg-gray-200 flex items-center justify-center rounded-lg text-gray-400">
+                        No Image
                     </div>
+                @endif
+
+                {{-- BRAND --}}
+                <span class="absolute top-2 left-2 bg-white/80 px-2 py-1 rounded text-xs font-bold shadow">
+                    {{ $shoe->brand }}
+                </span>
+
+                {{-- ACTION --}}
+                <div class="absolute top-2 right-2 flex gap-2 z-10">
+                    <a href="{{ route('admin.shoes.edit', $shoe) }}"
+                       class="bg-yellow-400 hover:bg-yellow-500 text-white text-[10px] px-2 py-1 rounded shadow">
+                        Edit
+                    </a>
+
+                    <form action="{{ route('admin.shoes.destroy', $shoe) }}" method="POST"
+                          onsubmit="return confirm('Yakin hapus?')">
+                        @csrf @method('DELETE')
+                        <button class="bg-red-500 hover:bg-red-600 text-white text-[10px] px-2 py-1 rounded shadow">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             </div>
         @empty
@@ -95,8 +99,13 @@
         @endforelse
     </div>
 
-    <div class="mt-8">
-        {{ $shoes->withQueryString()->links() }}
-    </div>
+        </div>
+
+    @empty
+        <div class="col-span-full text-center py-20 bg-white rounded-xl shadow">
+            <p class="text-gray-500 italic">No shoes available.</p>
+        </div>
+    @endforelse
+
 </div>
 @endsection
