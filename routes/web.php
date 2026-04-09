@@ -1,4 +1,5 @@
 <?php
+use App\Models\Shoe;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ShoeController;
@@ -17,7 +18,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // FITUR KATALOG SEPATU
     Route::prefix('shoes')->group(function () {
-        // Halaman Katalog (Index) -> URL: /shoes
         Route::get('/', [ShoeController::class, 'index'])->name('user.shoes.index');
 
         // Halaman Detail (Show) -> URL: /shoes/{id}
