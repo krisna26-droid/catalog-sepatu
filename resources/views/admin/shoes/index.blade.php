@@ -6,21 +6,21 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
     <div class="mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
-        <h2 class="text-xl font-extrabold text-gray-900">Kelola Stok</h2>
+        <h2 class="text-xl font-extrabold text-gray-900">Manage Shoes</h2>
 
         <div class="flex items-center gap-3 w-full md:w-auto">
             <form method="GET" class="flex w-full md:w-64">
                 <input type="text" name="search" value="{{ request('search') }}"
-                       placeholder="Cari sepatu..."
+                       placeholder="Search shoes..."
                        class="w-full rounded-l-md border-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500">
                 <button class="bg-gray-100 px-4 py-2 border border-l-0 border-gray-300 rounded-r-md text-sm font-semibold hover:bg-gray-200">
-                    Cari
+                    Search
                 </button>
             </form>
 
             <a href="{{ route('admin.shoes.create') }}"
                class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-blue-700 transition uppercase tracking-wider whitespace-nowrap">
-                + Tambah
+                + Add Shoe
             </a>
         </div>
     </div>
@@ -81,7 +81,7 @@
                                 @csrf @method('DELETE')
                                 <button type="submit" 
                                         class="inline-flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-[10px] text-white uppercase tracking-wider transition-all">
-                                    Hapus
+                                    Delete
                                 </button>
                             </form>
                         </div>
@@ -90,7 +90,7 @@
             </div>
         @empty
             <div class="col-span-full text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
-                <p class="text-gray-500 text-lg italic">Belum ada data sepatu.</p>
+                <p class="text-gray-500 text-lg italic">No shoes found.</p>
             </div>
         @endforelse
     </div>
