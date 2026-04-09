@@ -1,18 +1,20 @@
 <?php
+use App\Models\Shoe;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ShoeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $latestShoes = Shoe::latest()->take(3)->get();
+    return view('dashboard', compact('latestShoes'));
+})->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+        return redirect()->route('home');
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -20,11 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // FITUR KATALOG SEPATU
     Route::prefix('shoes')->group(function () {
-        // Halaman Katalog (Index) -> URL: /shoes
         Route::get('/', [ShoeController::class, 'index'])->name('user.shoes.index');
-        
-        // Halaman Detail (Show) -> URL: /shoes/{id}
-        Route::get('/{id}', [ShoeController::class, 'show'])->name('user.shoes.show');
+        Route::get('/{shoe}', [ShoeController::class, 'show'])->name('user.shoes.show');
     });
 });
 
