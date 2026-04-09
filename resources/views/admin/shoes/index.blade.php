@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Daftar Sepatu')
+@section('page-title', 'Shoe Management')
 
 @section('content')
 
 <div class="flex justify-between items-center mb-6">
-    <h2 class="text-xl font-bold text-gray-800">📦 Daftar Sepatu</h2>
+    <h2 class="text-xl font-bold text-gray-800">Shoe Management</h2>
 
     <a href="{{ route('admin.shoes.create') }}"
        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
-        + Tambah Sepatu
+        + Add New Shoe
     </a>
 </div>
 
@@ -46,7 +46,7 @@
                           onsubmit="return confirm('Yakin hapus?')">
                         @csrf @method('DELETE')
                         <button class="bg-red-500 hover:bg-red-600 text-white text-[10px] px-2 py-1 rounded shadow">
-                            Hapus
+                            Delete
                         </button>
                     </form>
                 </div>
@@ -85,7 +85,7 @@
 
     @empty
         <div class="col-span-full text-center py-20 bg-white rounded-xl shadow">
-            <p class="text-gray-500 italic">Belum ada data sepatu.</p>
+            <p class="text-gray-500 italic">No shoes available.</p>
         </div>
     @endforelse
 
