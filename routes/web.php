@@ -2,27 +2,35 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ShoeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ShoeController as AdminShoeController;
+use App\Models\Shoe; // PENTING: Import model Shoe untuk ambil data di dashboard
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => view('welcome'));
+// 1. Halaman Welcome (Bisa diakses siapa saja/Public)
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    // 2. Dashboard (Menampilkan 3 produk terbaru)
+    Route::get('/dashboard', function () {
+        $latestShoes = Shoe::latest()->take(3)->get();
+        return view('dashboard', compact('latestShoes'));
+    })->name('dashboard');
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // FITUR KATALOG SEPATU
+    // 3. FITUR KATALOG SEPATU (USER)
     Route::prefix('shoes')->group(function () {
-        // Halaman Katalog (Index) -> URL: /shoes
         Route::get('/', [ShoeController::class, 'index'])->name('user.shoes.index');
-
-        // Halaman Detail (Show) -> URL: /shoes/{id}
         Route::get('/{id}', [ShoeController::class, 'show'])->name('user.shoes.show');
     });
+
+    // 4. FITUR ADMIN (PR-nya Dev A)
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('shoes', AdminShoeController::class);
     });
