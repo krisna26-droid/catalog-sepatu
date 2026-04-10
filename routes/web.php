@@ -31,8 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{id}', [ShoeController::class, 'show'])->name('user.shoes.show');
     });
 
-    // 4. FITUR ADMIN (PR-nya Dev A)
-    Route::prefix('admin')->name('admin.')->group(function () {
+    // 4. FITUR ADMIN
+    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::resource('shoes', AdminShoeController::class);
     });
 });
