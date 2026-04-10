@@ -4,7 +4,7 @@ use App\Models\Shoe;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ShoeController;
 use App\Http\Controllers\Admin\ShoeController as AdminShoeController;
-use App\Models\Shoe; // PENTING: Import model Shoe untuk ambil data di dashboard
+
 use Illuminate\Support\Facades\Route;
 
 // 1. Halaman Welcome (Bisa diakses siapa saja/Public)
