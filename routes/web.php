@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 // 1. Halaman Welcome (Bisa diakses siapa saja/Public)
 Route::get('/', function () {
-    return view('welcome');
+    $latestShoes = Shoe::latest()->take(3)->get(); 
+    return view('welcome', compact('latestShoes'));
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
