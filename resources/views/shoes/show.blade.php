@@ -66,7 +66,25 @@
                                     @endif
                                 </div>
                                 <div class="w-px h-10 bg-gray-100"></div>
-                                
+                                <!-- Wishlist Product -->
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase mb-1">Wishlist</span>
+                                    
+                                    <form action="{{ route('wishlist.toggle', $shoe->id) }}" method="POST">
+                                        @csrf
+                                        @php
+                                            // Cek apakah produk ini sudah masuk wishlist user
+                                            $isWishlisted = auth()->user()->wishlists->contains($shoe->id);
+                                        @endphp
+
+                                        <button type="submit" class="inline-flex items-center gap-2 text-sm font-bold transition {{ $isWishlisted ? 'text-red-500' : 'text-gray-600 hover:text-red-500' }}">
+                                            <svg class="w-4 h-4 {{ $isWishlisted ? 'fill-current' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                            </svg>
+                                            {{ $isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist' }}
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 

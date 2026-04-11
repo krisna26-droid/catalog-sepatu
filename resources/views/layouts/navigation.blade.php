@@ -40,6 +40,11 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <!-- wishlist -->
+                            <x-dropdown-link :href="route('users.wishlist.index')">
+                                {{ __('My Wishlist') }}
+                            </x-dropdown-link>
+
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
@@ -93,6 +98,11 @@
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('profile.edit')">
                         {{ __('Profile') }}
+                    </x-responsive-nav-link>
+
+                    <!-- wishlist -->
+                    <x-responsive-nav-link :href="route('users.wishlist.index')">
+                        {{ __('My Wishlist') }}
                     </x-responsive-nav-link>
 
                     <form method="POST" action="{{ route('logout') }}">

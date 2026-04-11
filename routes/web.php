@@ -4,6 +4,7 @@ use App\Models\Shoe;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ShoeController;
 use App\Http\Controllers\Admin\ShoeController as AdminShoeController;
+use App\Http\Controllers\User\WishlistController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // 2. Dashboard (Menampilkan 3 produk terbaru)
+    // Dashboard (Menampilkan 3 produk terbaru)
     Route::get('/dashboard', function () {
         $latestShoes = Shoe::latest()->take(3)->get();
         return view('dashboard', compact('latestShoes'));
@@ -26,16 +27,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // 3. FITUR KATALOG SEPATU (USER)
+    // FITUR KATALOG SEPATU (USER)
     Route::prefix('shoes')->group(function () {
         Route::get('/', [ShoeController::class, 'index'])->name('user.shoes.index');
         Route::get('/{id}', [ShoeController::class, 'show'])->name('user.shoes.show');
     });
 
-    // 4. FITUR ADMIN
+    // FITUR ADMIN
     Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::resource('shoes', AdminShoeController::class);
     });
+
+    // FITUR WISHLIST
+    Route::post('/wishlist/{shoeId}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('users.wishlist.index');
 });
 
 require __DIR__ . '/auth.php';
